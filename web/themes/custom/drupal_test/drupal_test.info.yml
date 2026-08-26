@@ -1,0 +1,14 @@
+name: drupal_test
+type: theme
+base theme: false
+description: 'Custom frontend theme for the Calibrate website.'
+core_version_requirement: ^11
+libraries:
+  - drupal_test/global
+regions:
+  header: Header
+  primary_menu: Primary menu
+  highlighted: Highlighted
+  content: Content
+  sidebar: Sidebar
+  footer: Footer

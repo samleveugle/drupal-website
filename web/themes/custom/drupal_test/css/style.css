@@ -1,0 +1,9 @@
+/**
+ * drupal_test global styles.
+ *
+ * Tijdelijke check: roze rand = ons theme is actief.
+ * Dit halen we later weer weg.
+ */
+ body {
+    outline: 8px solid hotpink;
+  }
