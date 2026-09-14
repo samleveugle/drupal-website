@@ -1,9 +1,66 @@
 /**
  * Drupal Test – global styles.
- *
- * Bronbestand. Drupal laadt het gecompileerde css/style.css.
- * Tijdelijke check: roze rand. Later weghalen.
+ * Schrijf hier. Drupal laadt css/style.css.
  */
+
+ *,
+ *::before,
+ *::after {
+   box-sizing: border-box;
+ }
+ 
  body {
-    outline: 8px solid hotpink;
+   margin: 0;
+   font-family: system-ui, sans-serif;
+ }
+ 
+ .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+    transition: padding 0.2s ease;
   }
+
+  .header--scrolled {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .page {
+    padding-top: 7rem;
+  }
+ 
+ .header nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .header nav li {
+    list-style: none;
+  }
+  
+  .header .contextual-links {
+    display: none;
+  }
+ 
+ .header a {
+   text-decoration: none;
+   color: #111;
+ }
+ 
+ .header a:hover {
+   text-decoration: underline;
+ }
