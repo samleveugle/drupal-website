@@ -1,0 +1,34 @@
+{#
+/**
+ * @file
+ * Page structure for the Drupal Test theme.
+ *
+ * Regions come from drupal_test.info.yml and are printed here.
+ */
+#}
+<div class="page">
+
+  <header class="header">
+    {{ page.header }}
+    {{ page.primary_menu }}
+  </header>
+
+  {{ page.highlighted }}
+
+  <main id="main-content" class="main">
+    {{ page.content }}
+
+    {% if page.sidebar %}
+      <aside class="sidebar">
+        {{ page.sidebar }}
+      </aside>
+    {% endif %}
+  </main>
+
+  {% if page.footer %}
+    <footer class="footer">
+      {{ page.footer }}
+    </footer>
+  {% endif %}
+
+</div>
