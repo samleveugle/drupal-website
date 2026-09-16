@@ -1,34 +1,41 @@
-{#
+{                                                              #
 /**
- * @file
- * Page structure for the Drupal Test theme.
- *
- * Regions come from drupal_test.info.yml and are printed here.
- */
+* @file
+* Page structure for the Drupal Test theme.
+*
+* Regions come from drupal_test.info.yml and are printed here.
+*/
 #}
 <div class="page">
 
-  <header class="header">
-    {{ page.header }}
-    {{ page.primary_menu }}
-  </header>
+<header class="header">
+{{ page.header }}
 
-  {{ page.highlighted }}
+<button type="button" class="header__toggle" aria-expanded="false" aria-controls="header-menu">
+Menu
+</button>
 
-  <main id="main-content" class="main">
-    {{ page.content }}
+<div id="header-menu" class="header__menu">
+{{ page.primary_menu }}
+</div>
+</header>
 
-    {% if page.sidebar %}
-      <aside class="sidebar">
-        {{ page.sidebar }}
-      </aside>
-    {% endif %}
-  </main>
+{{ page.highlighted }}
 
-  {% if page.footer %}
-    <footer class="footer">
-      {{ page.footer }}
-    </footer>
-  {% endif %}
+<main id="main-content" class="main">
+{{ page.content }}
+
+{% if page.sidebar %}
+<aside class="sidebar">
+{{ page.sidebar }}
+</aside>
+{% endif %}
+</main>
+
+{% if page.footer %}
+<footer class="footer">
+{{ page.footer }}
+</footer>
+{% endif %}
 
 </div>

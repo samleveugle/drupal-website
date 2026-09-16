@@ -17,26 +17,37 @@ body {
 .header {
   position: fixed;
   top: 0;
-  left: 0;
+  left: var(--drupal-displace-offset-left, 0);
   right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 2rem;
   border-bottom: 1px solid #ddd;
   background: #fff;
   transition: padding 0.2s ease;
 }
 
+.header .site-branding,
+.header .site-branding a {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
 .header--scrolled {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+}
+
+.header--scrolled .site-branding,
+.header--scrolled .site-branding a {
+  font-size: 1.05rem;
 }
 
 .page {
-  padding-top: 7rem;
+  padding-top: 5.5rem;
 }
 
 .header nav ul {
@@ -63,6 +74,39 @@ body {
 
 .header a:hover {
   text-decoration: underline;
+}
+
+.header__toggle {
+  display: none;
+  margin-left: auto;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #111;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+
+@media (max-width: 767px) {
+  .header__toggle {
+    display: block;
+  }
+  .header__menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 2rem;
+  }
+  .header--open .header__menu {
+    display: block;
+  }
+  .header__menu nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
