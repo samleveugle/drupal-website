@@ -24,7 +24,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1.25rem 2rem;
+  padding: 2.5rem 2rem;
   border-bottom: 1px solid #ddd;
   background: #fff;
   transition: padding 0.2s ease;
@@ -37,8 +37,8 @@ body {
 }
 
 .header--scrolled {
-  padding-top: 0.65rem;
-  padding-bottom: 0.65rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .header--scrolled .site-branding,
@@ -106,6 +106,55 @@ body {
   .header__menu nav ul {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+.main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 3rem;
+}
+
+.view-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.views-row {
+  display: grid;
+  grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+  grid-template-areas: "image title" "image body" "image tags";
+  gap: 0.5rem 1.5rem;
+  align-items: start;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.views-row .views-field-field-image {
+  grid-area: image;
+}
+
+.views-row .views-field-title {
+  grid-area: title;
+}
+
+.views-row .views-field-field-body {
+  grid-area: body;
+}
+
+.views-row .views-field-field-tags {
+  grid-area: tags;
+}
+
+.view-filters {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+@media (max-width: 767px) {
+  .views-row {
+    grid-template-columns: 1fr;
   }
 }
 
