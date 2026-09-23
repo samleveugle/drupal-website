@@ -1,0 +1,89 @@
+.view-filters {
+  margin: 0 0 1.5rem;
+}
+
+.path-articles .block-page-title-block,
+.path-offices .block-page-title-block {
+  padding-right: min(18rem, 45%);
+}
+
+.path-articles .view-articles > .view-filters,
+.path-offices .view-offices > .view-filters {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+}
+
+.tag-pills,
+.tag-pills--filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag-pills__item,
+.tag-pills__item a {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid #111;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  background: #fff;
+}
+
+.tag-pills__item.is-active,
+.tag-pills__item.is-active a {
+  background: #111;
+  color: #fff;
+}
+
+.view-offices .views-exposed-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.view-offices .views-exposed-form .form-item {
+  margin: 0;
+}
+
+.view-offices .views-exposed-form label {
+  margin-right: 0.35rem;
+  font-weight: 600;
+}
+
+.view-offices .views-exposed-form select {
+  min-width: 10rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #111;
+  background: #fff;
+  font: inherit;
+}
+
+.view-offices .views-exposed-form .form-actions,
+.view-offices .views-exposed-form .form-submit {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .path-articles .block-page-title-block,
+  .path-offices .block-page-title-block {
+    padding-right: 0;
+  }
+
+  .path-articles .view-articles > .view-filters,
+  .path-offices .view-offices > .view-filters {
+    position: static;
+    margin-bottom: 1.25rem;
+  }
+
+  .tag-pills--filter {
+    justify-content: flex-start;
+  }
+}

@@ -2,5 +2,184 @@
 
 /**
  * @file
- * Functions to support theming in the drupal_test theme.
+ * Theme preprocess for the wireframe frontend.
  */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_preprocess_HOOK() for html templates.
+ *
+ * Core system html.html.twig prints body attributes, but with base theme
+ * false those classes are empty. We add path classes used by the listing CSS.
+ */
+function drupal_test_preprocess_html(array &$variables): void {
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
+    $variables['attributes']['class'][] = 'path-frontpage';
+  }
+
+  $current_path = \Drupal::service('path.current')->getPath();
+  $alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
+  $css_path = Html::cleanCssIdentifier(trim($alias, '/'));
+  if ($css_path !== '') {
+    $variables['attributes']['class'][] = 'path-' . $css_path;
+  }
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (is_numeric($node)) {
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($node);
+  }
+  if ($node instanceof NodeInterface) {
+    $variables['attributes']['class'][] = 'page-node-type-' . Html::cleanCssIdentifier($node->bundle());
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function drupal_test_preprocess_page(array &$variables): void {
+  $variables['site_name'] = \Drupal::config('system.site')->get('name');
+
+  $theme_path = \Drupal::service('extension.list.theme')->getPath('drupal_test');
+  $file_url = \Drupal::service('file_url_generator');
+  $variables['logo_src'] = $file_url->generateString($theme_path . '/images/logo.svg');
+  $variables['hero_src'] = $file_url->generateString($theme_path . '/images/hero-placeholder.svg');
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (is_numeric($node)) {
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($node);
+  }
+  if ($node instanceof NodeInterface) {
+    $variables['node'] = $node;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ */
+function drupal_test_preprocess_node(array &$variables): void {
+  $node = $variables['node'];
+  $paths = [
+    'news' => '/news',
+    'articles' => '/articles',
+    'offices' => '/offices',
+  ];
+  if (isset($paths[$node->bundle()])) {
+    $variables['overview_url'] = Url::fromUserInput($paths[$node->bundle()])->toString();
+  }
+
+  // Article wireframe shows "Country: …" from the referenced office, not the office title.
+  if ($node->bundle() === 'articles' && $node->hasField('field_office') && !$node->get('field_office')->isEmpty()) {
+    $office = $node->get('field_office')->entity;
+    if ($office && $office->hasField('field_country') && !$office->get('field_country')->isEmpty()) {
+      $country = $office->get('field_country')->entity;
+      if ($country) {
+        $variables['article_country'] = $country->label();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for views-view templates.
+ *
+ * Drupal 11 + base theme false does not add view-id-* classes. We add them
+ * here so listings can be targeted without relying on a Views CSS class.
+ */
+function drupal_test_preprocess_views_view(array &$variables): void {
+  $view = $variables['view'];
+  $view_id = Html::cleanCssIdentifier($view->id());
+  $display_id = Html::cleanCssIdentifier($view->current_display);
+
+  $variables['attributes']['class'][] = 'view';
+  $variables['attributes']['class'][] = 'view-' . $view_id;
+  $variables['attributes']['class'][] = 'view-id-' . $view_id;
+  $variables['attributes']['class'][] = 'view-display-id-' . $display_id;
+
+  $card_displays = [
+    'articles' => ['default', 'page_1', 'block_related', 'block_by_office'],
+    'news' => ['default', 'page_1', 'block_related'],
+    'offices' => ['default', 'page_1'],
+  ];
+  $variables['is_card_grid'] = isset($card_displays[$view->id()])
+    && in_array($view->current_display, $card_displays[$view->id()], TRUE);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for views exposed forms.
+ *
+ * Keep the existing Articles tag filter, but expose the options as pills
+ * instead of the default "Tags (field_tags)" select.
+ */
+function drupal_test_preprocess_views_exposed_form(array &$variables): void {
+  $form = $variables['form'];
+  if (empty($form['field_tags_target_id']['#options'])) {
+    return;
+  }
+
+  $current = \Drupal::request()->query->get('field_tags_target_id');
+  $pills = [];
+  $pills[] = [
+    'url' => Url::fromRoute('<current>')->toString(),
+    'label' => t('All'),
+    'active' => $current === NULL || $current === '' || $current === 'All',
+  ];
+
+  foreach ($form['field_tags_target_id']['#options'] as $tid => $label) {
+    if ((string) $tid === 'All') {
+      continue;
+    }
+    $label_text = is_object($label) ? strip_tags((string) $label) : (string) $label;
+    $pills[] = [
+      'url' => Url::fromRoute('<current>', [], [
+        'query' => ['field_tags_target_id' => $tid],
+      ])->toString(),
+      'label' => $label_text,
+      'active' => (string) $current === (string) $tid,
+    ];
+  }
+
+  $variables['tag_pills'] = $pills;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the Offices country filter.
+ *
+ * Auto-submit on change so the wireframe dropdown does not need an Apply button.
+ */
+function drupal_test_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state): void {
+  $storage = $form_state->getStorage();
+  $view = $storage['view'] ?? NULL;
+  if (!$view || $view->id() !== 'offices') {
+    return;
+  }
+  if (isset($form['field_country_target_id'])) {
+    $form['field_country_target_id']['#attributes']['class'][] = 'js-auto-submit';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for block templates.
+ */
+function drupal_test_preprocess_block(array &$variables): void {
+  if (($variables['plugin_id'] ?? '') !== 'views_block:articles-block_by_office') {
+    return;
+  }
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (is_numeric($node)) {
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($node);
+  }
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'offices') {
+    return;
+  }
+  if ($node->hasField('field_country') && !$node->get('field_country')->isEmpty()) {
+    $country = $node->get('field_country')->entity;
+    if ($country) {
+      $variables['label'] = t('Articles from @country', ['@country' => $country->label()]);
+    }
+  }
+}

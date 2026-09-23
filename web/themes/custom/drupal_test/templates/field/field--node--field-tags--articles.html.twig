@@ -1,0 +1,13 @@
+{#
+/**
+ * @file
+ * Article tags as pills on the detail page.
+ */
+#}
+{% if items %}
+  <ul class="tag-pills">
+    {% for item in items %}
+      <li class="tag-pills__item">{{ item.content }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}

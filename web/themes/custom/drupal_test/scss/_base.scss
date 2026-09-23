@@ -1,0 +1,65 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #111;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+.highlighted {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 3rem;
+}
+
+.region-content {
+  position: relative;
+}
+
+.block-page-title-block h1,
+.page-title {
+  margin: 0 0 1.25rem;
+  font-size: 2rem;
+}
+
+.path-frontpage .block-system-main-block,
+.view-homepage {
+  display: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  word-wrap: normal;
+}
+
+.media-placeholder {
+  min-height: 12rem;
+  background:
+    linear-gradient(to bottom right, transparent calc(50% - 1px), #8f8f8f 50%, transparent calc(50% + 1px)),
+    linear-gradient(to bottom left, transparent calc(50% - 1px), #8f8f8f 50%, transparent calc(50% + 1px)),
+    #c8c8c8;
+}

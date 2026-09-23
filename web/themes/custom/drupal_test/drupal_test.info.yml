@@ -10,5 +10,7 @@ regions:
   primary_menu: Primary menu
   highlighted: Highlighted
   content: Content
+  home_news: Homepage latest news
+  home_articles: Homepage latest articles
   sidebar: Sidebar
   footer: Footer

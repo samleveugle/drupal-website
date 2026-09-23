@@ -1,0 +1,33 @@
+{#
+/**
+ * @file
+ * Article detail: same split as news, plus tags and country.
+ */
+#}
+<article{{ attributes.addClass('node', 'node--articles', 'node--detail') }}>
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  {% if overview_url %}
+    <a class="node__back" href="{{ overview_url }}">{{ 'back to overview'|t }}</a>
+  {% endif %}
+
+  <h1 class="node__title">{{ label }}</h1>
+
+  <div class="node__split">
+    <div class="node__media">
+      {% if content.field_image|render %}
+        {{ content.field_image }}
+      {% else %}
+        <div class="media-placeholder" aria-hidden="true"></div>
+      {% endif %}
+    </div>
+    <div class="node__copy">
+      {{ content.field_body }}
+      {{ content.field_tags }}
+      {% if article_country %}
+        <p class="node__country">{{ 'Country: @country'|t({'@country': article_country}) }}</p>
+      {% endif %}
+    </div>
+  </div>
+</article>

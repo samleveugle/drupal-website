@@ -31,4 +31,16 @@
       });
     },
   };
+
+  Drupal.behaviors.drupalTestAutoSubmit = {
+    attach: function (context) {
+      once("drupal-test-auto-submit", ".js-auto-submit", context).forEach(function (select) {
+        select.addEventListener("change", function () {
+          if (select.form) {
+            select.form.submit();
+          }
+        });
+      });
+    },
+  };
 })(Drupal, once);

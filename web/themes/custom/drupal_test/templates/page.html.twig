@@ -1,41 +1,70 @@
-{                                                              #
+{#
 /**
-* @file
-* Page structure for the Drupal Test theme.
-*
-* Regions come from drupal_test.info.yml and are printed here.
-*/
+ * @file
+ * Global page chrome: hero, sticky header, main, footer.
+ *
+ * Hero sits above the header (wireframe). Header is position:sticky so it
+ * pins after you scroll past the banner, instead of covering the hero.
+ */
 #}
 <div class="page">
 
-<header class="header">
-{{ page.header }}
+  <div class="hero"{% if not node %} aria-hidden="true"{% endif %}>
+    <img class="hero__image" src="{{ hero_src }}" alt="" width="1920" height="420">
+    {% if node %}
+      <h1 class="hero__title">{{ node.label }}</h1>
+    {% endif %}
+  </div>
 
-<button type="button" class="header__toggle" aria-expanded="false" aria-controls="header-menu">
-Menu
-</button>
+  <header class="header">
+    <a class="header__logo" href="{{ path('<front>') }}">
+      <img src="{{ logo_src }}" alt="{{ site_name }}" width="64" height="64">
+    </a>
 
-<div id="header-menu" class="header__menu">
-{{ page.primary_menu }}
-</div>
-</header>
+    <button type="button" class="header__toggle" aria-expanded="false" aria-controls="header-menu">
+      Menu
+    </button>
 
-{{ page.highlighted }}
+    <div id="header-menu" class="header__menu">
+      {{ page.primary_menu }}
+    </div>
+  </header>
 
-<main id="main-content" class="main">
-{{ page.content }}
+  {% if page.highlighted %}
+    <div class="highlighted">
+      {{ page.highlighted }}
+    </div>
+  {% endif %}
 
-{% if page.sidebar %}
-<aside class="sidebar">
-{{ page.sidebar }}
-</aside>
-{% endif %}
-</main>
+  <main id="main-content" class="main">
+    {% if is_front %}
+      <div class="home-columns">
+        <section class="home-columns__news">
+          {{ page.home_news }}
+        </section>
+        <section class="home-columns__articles">
+          {{ page.home_articles }}
+        </section>
+      </div>
+    {% endif %}
 
-{% if page.footer %}
-<footer class="footer">
-{{ page.footer }}
-</footer>
-{% endif %}
+    {{ page.content }}
+
+    {% if page.sidebar %}
+      <aside class="sidebar">
+        {{ page.sidebar }}
+      </aside>
+    {% endif %}
+  </main>
+
+  <footer class="footer">
+    <a class="footer__logo" href="{{ path('<front>') }}">
+      <img src="{{ logo_src }}" alt="{{ site_name }}" width="64" height="64">
+    </a>
+    <div class="footer__menu">
+      {{ page.footer }}
+    </div>
+    <p class="footer__credit">Site created by:</p>
+  </footer>
 
 </div>

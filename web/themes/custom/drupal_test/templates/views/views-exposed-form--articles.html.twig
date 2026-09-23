@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Articles exposed tag filter as clickable pills.
+ *
+ * Same query parameter as the Views filter (field_tags_target_id).
+ * The default select stays out of the markup so it does not look like
+ * "Tags (field_tags)".
+ */
+#}
+{% if tag_pills %}
+  <nav class="tag-pills tag-pills--filter" aria-label="{{ 'Filter by tag'|t }}">
+    {% for pill in tag_pills %}
+      <a href="{{ pill.url }}" class="tag-pills__item{% if pill.active %} is-active{% endif %}">{{ pill.label }}</a>
+    {% endfor %}
+  </nav>
+{% endif %}

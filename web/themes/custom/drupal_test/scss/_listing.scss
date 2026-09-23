@@ -1,0 +1,72 @@
+// Card grids. The container is added in views-view.html.twig because D11
+// does not print .view-content and base theme false has no view-id-* classes.
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem 1.5rem;
+}
+
+.listing-grid .views-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.listing-grid .views-field-field-image img,
+.listing-grid .field-content img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  background: #c8c8c8;
+}
+
+.listing-grid .views-field-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.listing-grid .views-field-title a {
+  text-decoration: none;
+}
+
+.listing-grid .views-field-title a:hover {
+  text-decoration: underline;
+}
+
+.listing-grid .views-field-field-body,
+.listing-grid .views-field-body {
+  font-size: 0.95rem;
+}
+
+.pager {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pager__items,
+.pager-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 900px) {
+  .listing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 599px) {
+  .listing-grid {
+    grid-template-columns: 1fr;
+  }
+}

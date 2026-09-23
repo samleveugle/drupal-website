@@ -1,0 +1,43 @@
+.home-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.home-columns h2,
+.home-columns .block__title {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+}
+
+.home-latest .listing-grid {
+  display: block;
+}
+
+.home-latest .views-row {
+  margin-bottom: 1.25rem;
+}
+
+.home-latest .views-field-title {
+  font-weight: 700;
+}
+
+.home-latest .views-field-title a {
+  text-decoration: none;
+}
+
+.home-latest .more-link {
+  margin-top: 0.5rem;
+}
+
+.home-latest .more-link a {
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .home-columns {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}

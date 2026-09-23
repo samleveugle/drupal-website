@@ -1,0 +1,68 @@
+.node--detail {
+  margin-bottom: 2.5rem;
+}
+
+.node__back {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.node__title {
+  margin: 0 0 1.25rem;
+  font-size: 2rem;
+}
+
+.node__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.node__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #c8c8c8;
+}
+
+.node__copy .field {
+  margin: 0 0 1rem;
+}
+
+.node__country {
+  margin: 0.75rem 0 0;
+}
+
+.office-contact p {
+  margin: 0 0 0.6rem;
+}
+
+.office-contact__label {
+  font-weight: 700;
+}
+
+.office-contact .field--name-field-email,
+.office-contact .field--name-field-email .field__item {
+  display: inline;
+}
+
+.block-views-blocknews-block-related,
+.block-views-blockarticles-block-related,
+.block-views-blockarticles-block-by-office {
+  margin-top: 2.5rem;
+}
+
+.block-views-blocknews-block-related h2,
+.block-views-blockarticles-block-related h2,
+.block-views-blockarticles-block-by-office h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.4rem;
+}
+
+@media (max-width: 767px) {
+  .node__split {
+    grid-template-columns: 1fr;
+  }
+}

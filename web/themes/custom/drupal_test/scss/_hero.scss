@@ -1,0 +1,29 @@
+.hero {
+  position: relative;
+  width: 100%;
+  background: #c8c8c8;
+}
+
+.hero__image {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.hero__title {
+  position: absolute;
+  left: 2rem;
+  bottom: 1.25rem;
+  margin: 0;
+  max-width: min(40rem, calc(100% - 4rem));
+  padding: 0.2rem 0.5rem;
+  background: rgb(255 255 255 / 75%);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+@media (min-width: 768px) {
+  .hero__image {
+    height: 320px;
+  }
+}
