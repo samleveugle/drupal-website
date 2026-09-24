@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * Helpers for the wireframe listings.
+ */
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_views_pre_view().
+ *
+ * Office detail "Articles from [country]" includes every office in that country.
+ * A theme cannot implement this hook; Views only invokes modules.
+ */
+function drupal_test_tools_views_pre_view($view, $display_id, array &$args): void {
+  if ($view->id() !== 'articles' || $display_id !== 'block_by_office') {
+    return;
+  }
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (is_numeric($node)) {
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($node);
+  }
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'offices') {
+    return;
+  }
+  if (!$node->hasField('field_country') || $node->get('field_country')->isEmpty()) {
+    return;
+  }
+
+  $office_nids = \Drupal::entityQuery('node')
+    ->accessCheck(TRUE)
+    ->condition('type', 'offices')
+    ->condition('status', 1)
+    ->condition('field_country', $node->get('field_country')->target_id)
+    ->execute();
+  if ($office_nids) {
+    $args[0] = implode('+', $office_nids);
+  }
+}

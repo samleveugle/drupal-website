@@ -27,6 +27,13 @@
   text-decoration: none;
 }
 
+.home-latest .views-field-field-body {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
 .home-latest .more-link {
   margin-top: 0.5rem;
 }

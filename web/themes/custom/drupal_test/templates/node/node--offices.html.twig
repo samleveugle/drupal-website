@@ -15,11 +15,10 @@
   <h1 class="node__title">{{ label }}</h1>
 
   <div class="node__split">
+    {% set office_image = content.field_image|render %}
     <div class="node__media">
-      {% if content.field_image|render %}
-        {{ content.field_image }}
-      {% else %}
-        <div class="media-placeholder" aria-hidden="true"></div>
+      {% if office_image|trim %}
+        {{ office_image }}
       {% endif %}
     </div>
     <div class="node__copy office-contact">
@@ -32,8 +31,8 @@
       {% if node.field_adress.value %}
         <p><span class="office-contact__label">{{ 'Address'|t }}</span> {{ node.field_adress.value }}</p>
       {% endif %}
-      {% if content.field_email|render %}
-        <p><span class="office-contact__label">{{ 'Email'|t }}</span> {{ content.field_email }}</p>
+      {% if node.field_email.value %}
+        <p><span class="office-contact__label">{{ 'Email'|t }}</span> <a href="mailto:{{ node.field_email.value }}">{{ node.field_email.value }}</a></p>
       {% endif %}
       {% if node.field_contact_person.value %}
         <p><span class="office-contact__label">{{ 'Contact person'|t }}</span> {{ node.field_contact_person.value }}</p>

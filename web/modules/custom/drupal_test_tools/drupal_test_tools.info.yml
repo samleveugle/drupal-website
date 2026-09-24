@@ -1,0 +1,5 @@
+name: Drupal Test tools
+type: module
+description: 'Small helpers for the wireframe frontend (country-based office articles).'
+package: Custom
+core_version_requirement: ^11

@@ -14,14 +14,15 @@
 
   <h1 class="node__title">{{ label }}</h1>
 
+  {# Render the image once. |render in an if plus {{ content.field_image }}
+     can print the photo and leave an empty wrapper (extra grey box). #}
+  {% set article_image = content.field_image|render %}
   <div class="node__split">
-    <div class="node__media">
-      {% if content.field_image|render %}
-        {{ content.field_image }}
-      {% else %}
-        <div class="media-placeholder" aria-hidden="true"></div>
-      {% endif %}
-    </div>
+    {% if article_image|trim %}
+      <div class="node__media">
+        {{ article_image }}
+      </div>
+    {% endif %}
     <div class="node__copy">
       {{ content.field_body }}
       {{ content.field_tags }}

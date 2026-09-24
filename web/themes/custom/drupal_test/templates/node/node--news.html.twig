@@ -14,14 +14,13 @@
 
   <h1 class="node__title">{{ label }}</h1>
 
+  {% set news_image = content.field_image|render %}
   <div class="node__split">
-    <div class="node__media">
-      {% if content.field_image|render %}
-        {{ content.field_image }}
-      {% else %}
-        <div class="media-placeholder" aria-hidden="true"></div>
-      {% endif %}
-    </div>
+    {% if news_image|trim %}
+      <div class="node__media">
+        {{ news_image }}
+      </div>
+    {% endif %}
     <div class="node__copy">
       {{ content.field_body }}
     </div>

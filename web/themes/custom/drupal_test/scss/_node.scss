@@ -23,7 +23,8 @@
 .node__media img {
   display: block;
   width: 100%;
-  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
   background: #c8c8c8;
 }
 
@@ -43,11 +44,6 @@
   font-weight: 700;
 }
 
-.office-contact .field--name-field-email,
-.office-contact .field--name-field-email .field__item {
-  display: inline;
-}
-
 .block-views-blocknews-block-related,
 .block-views-blockarticles-block-related,
 .block-views-blockarticles-block-by-office {
@@ -59,6 +55,11 @@
 .block-views-blockarticles-block-by-office h2 {
   margin: 0 0 1.25rem;
   font-size: 1.4rem;
+}
+
+.block-views-blockarticles-block-related .more-link,
+.block-views-blockarticles-block-by-office .more-link {
+  margin-top: 1rem;
 }
 
 @media (max-width: 767px) {

@@ -140,14 +140,45 @@ $office_defs = [
     'contact' => 'Lukas Weber',
     'alt' => 'Office building in Munich',
   ],
+  [
+    'title' => 'Office Hamburg',
+    'country' => 'Germany',
+    'tel' => '+49 40 11 22 33',
+    'fax' => '+49 40 11 22 34',
+    'adress' => 'Mönckebergstrasse 7, Hamburg, Germany',
+    'email' => 'hamburg@example.com',
+    'contact' => 'Greta Hoffmann',
+    'alt' => 'Office building in Hamburg',
+  ],
+  [
+    'title' => 'Office Utrecht',
+    'country' => 'Netherlands',
+    'tel' => '+31 30 12 34 56',
+    'fax' => '+31 30 12 34 57',
+    'adress' => 'Vredenburg 40, Utrecht, Netherlands',
+    'email' => 'utrecht@example.com',
+    'contact' => 'Sanne de Vries',
+    'alt' => 'Office building in Utrecht',
+  ],
+  [
+    'title' => 'Office Manchester',
+    'country' => 'United Kingdom',
+    'tel' => '+44 161 496 0123',
+    'fax' => '+44 161 496 0124',
+    'adress' => 'St Peters Square 2, Manchester, United Kingdom',
+    'email' => 'manchester@example.com',
+    'contact' => 'Olivia Grant',
+    'alt' => 'Office building in Manchester',
+  ],
 ];
 
 $offices = [];
-foreach (['Office Belgium', 'Office Netherlands'] as $existing_title) {
-  $node = seed_find_node('offices', $existing_title);
-  if ($node) {
-    $offices[$existing_title] = $node;
-  }
+$existing_office_nids = \Drupal::entityQuery('node')
+  ->accessCheck(FALSE)
+  ->condition('type', 'offices')
+  ->execute();
+foreach (Node::loadMultiple($existing_office_nids) as $existing_office) {
+  $offices[$existing_office->label()] = $existing_office;
 }
 
 foreach ($office_defs as $def) {
@@ -213,12 +244,12 @@ foreach ($news_defs as $title) {
 $article_defs = [
   [
     'title' => 'How regional hubs support faster delivery',
-    'office' => 'Office Belgium',
+    'office' => 'Office Brussels',
     'tags' => ['Logistics', 'Business'],
   ],
   [
     'title' => 'Designing quieter and greener workplaces',
-    'office' => 'Office Netherlands',
+    'office' => 'Office Amsterdam',
     'tags' => ['Sustainability', 'Innovation'],
   ],
   [
@@ -243,8 +274,33 @@ $article_defs = [
   ],
   [
     'title' => 'What clients asked us most this year',
-    'office' => 'Office Belgium',
+    'office' => 'Office Antwerp',
     'tags' => ['News', 'Logistics'],
+  ],
+  [
+    'title' => 'Planning last-mile routes in port cities',
+    'office' => 'Office Rotterdam',
+    'tags' => ['Logistics', 'Technology'],
+  ],
+  [
+    'title' => 'Local partnerships in the Rhône region',
+    'office' => 'Office Lyon',
+    'tags' => ['Business', 'Sustainability'],
+  ],
+  [
+    'title' => 'Hybrid meeting rooms that actually work',
+    'office' => 'Office London',
+    'tags' => ['Innovation', 'Technology'],
+  ],
+  [
+    'title' => 'Workshops for engineering teams in Germany',
+    'office' => 'Office Berlin',
+    'tags' => ['Technology', 'Business'],
+  ],
+  [
+    'title' => 'Client workshops in the London studio',
+    'office' => 'Office London',
+    'tags' => ['News', 'Business'],
   ],
 ];
 
@@ -253,7 +309,8 @@ foreach ($article_defs as $def) {
     continue;
   }
   if (empty($offices[$def['office']])) {
-    throw new \RuntimeException('Missing office ' . $def['office']);
+    print "Skip article {$def['title']}: office {$def['office']} not found\n";
+    continue;
   }
   $tag_values = [];
   foreach ($def['tags'] as $tag_name) {
